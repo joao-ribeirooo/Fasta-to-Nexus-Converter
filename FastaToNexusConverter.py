@@ -1,7 +1,6 @@
 import sys
 import random
 
-
 def ReadFile(filename):
     '''
     Reads the fasta file and inserts into a dictionary the species name and the sequence, respectively
