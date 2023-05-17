@@ -4,9 +4,9 @@ from collections import Counter
 
 def ReadFile(filename):
     '''
-    Reads the fasta file and inserts into a Dicionario the species name and the sequence, respectively
+    The ReadFile function reads a fasta file, extracts name of the specie and the sequence  and returns them as a dictionary.
     Input: Fasta File
-    Output: Dicionario que contem o nome da especie e a respetiva sequencia >IGRA5
+    Output:  Dictionary contain the species name and the sequence, respectively
     '''
     fastahandle = open(filename, "r")
     Dicionario = {}
@@ -48,7 +48,10 @@ def VerifyNames(Dicionario):
 
 def VariableNCHAR(Dicionario):
     """
-    It will get the NCHAR value by looping through the dictionary
+    It will get the NCHAR value by looping through the dictionary and find the the lenght of each sequence and store in a set which will not have duplicates. If the length of the set is 1 it means that all sequences 
+    have the same character lenght, if it is more than 1 it has one or more sequences that have more characters than the others and it will print a message and close the program.
+    Input : Dicionario
+    Output : NCHAR variable to be used in the nexus file    
     """
     lenghts = set()
     for SpeciesName, sequence in Dicionario.items():
@@ -61,6 +64,11 @@ def VariableNCHAR(Dicionario):
     return nchar
 
 def VariableOutgroup(Dicionario, outgroup):
+    """
+    It will consider the outgroup in the mrbayes block inside the nexus file. If the ougroup doesnt appear to be inside the Dictionary as a key it will return a message saying it doesnt exist and close the program.
+    Input: Dictionaryand outgroup(inserted in the terminal)
+    Output: outgroup
+    """
     outgroup = outgroup.replace(" ", "_") #in case there is spaces to match the specie name inside the dictionary
     outgroup = outgroup.replace(">", "") #in case there is > to match the specie name inside the dictionary
     outgroup = outgroup[:99]
@@ -71,6 +79,11 @@ def VariableOutgroup(Dicionario, outgroup):
         return outgroup
 
 def FraseInspiradora():
+    """
+    A random phrase will be choosen and be inserted into the nexus file as a comment to not ruin the file.
+    Input : None
+    Output : Phrase
+    """
     FraseRand = ["When there is a true desire in the heart, and that desire is strong, that is when he finds real strength that even he did not know he had!",
     "Hurt me with the truth. But never comfort me with a lie.", 
     "Peoples lives dont end when they die, it ends when they lose faith.",
@@ -86,6 +99,12 @@ def FraseInspiradora():
     return fraseinspiradora
 
 def WriteFileNexus(nchar, outgroup, ngen, fraseinspiradora,  Dicionario):
+    """
+    It will print the nexus file to the STDIN and use every variable obtained in the others functions and the uptaded dictionary after the verification of the names. 
+    Also ngen will be determined by the user inserted in the terminal.
+    Input : nchar, outgroup , ngen, fraseinpiradora, dicionario
+    Ouput : print of the nexus file into the STDOUT
+    """
     print(f"""[{fraseinspiradora}]
 #NEXUS
 
@@ -93,6 +112,7 @@ BEGIN DATA;
 DIMENSIONS NTAX={len(Dicionario)} NCHAR={nchar};
 FORMAT DATATYPE=DNA MISSING=N GAP=-;
 MATRIX""")
+    
     for SpeciesName, sequence in Dicionario.items():
         #print('    '+ SpeciesName + '  ' + sequence)
         print("{: >99} ".format(SpeciesName) + '  ' + sequence)
