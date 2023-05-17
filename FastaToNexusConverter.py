@@ -114,9 +114,8 @@ FORMAT DATATYPE=DNA MISSING=N GAP=-;
 MATRIX""")
     
     for SpeciesName, sequence in Dicionario.items():
-        #print('    '+ SpeciesName + '  ' + sequence)
-        print("{: >99} ".format(SpeciesName) + '  ' + sequence)
-
+        print('    '+ SpeciesName + '  ' + sequence)
+        #print("{: >99} ".format(SpeciesName) + '  ' + sequence)
     print("  ;" + "\n" + "  end;")
     print(f'''
 begin mrbayes;
