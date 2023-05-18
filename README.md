@@ -6,11 +6,12 @@ Well as the name says it will convert any valid fasta file into a nexus file wit
 
 # How to use it?
 ## Linux
-Type chmod +x script_name.py in the command prompt
-You will write ./filename.py "filename.fasta" "nameofoutgroup" "Numberofgenerations"
-Example : ./fastatonexus.py "example.fasta" "Podarcis" "1000000"
+- Type chmod +x script_name.py in the command prompt
+- You will write ./filename.py "filename.fasta" "nameofoutgroup" "Numberofgenerations" or python filename.py "filename.fasta" "nameofoutgroup" "Numberofgenerations"
+- Example : ./fastatonexus.py "example.fasta" "Podarcis" "1000000" or python fastatonexus.py "example.fasta" "Podarcis" "1000000"
+
 ## Windows
-You will write python filename.py "filename.fasta" "nameofoutgroup" "Numberofgenerations"
-Example : python fastatonexus.py "example.fasta" "Podarcis" "1000000"
+- You will write python filename.py "filename.fasta" "nameofoutgroup" "Numberofgenerations"
+- Example : python fastatonexus.py "example.fasta" "Podarcis" "1000000"
 
 
