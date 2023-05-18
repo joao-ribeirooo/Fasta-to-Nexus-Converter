@@ -13,7 +13,7 @@ def ReadFile(filename):
     for row in fastahandle:
         if row.startswith(">"):
             name = row.strip()
-            name = name.replace(">", "")
+            name = name.replace(">", "") 
             name = name.replace(" ", "_")
             Dicionario[name] = ""
         else:
@@ -105,26 +105,25 @@ def WriteFileNexus(nchar, outgroup, ngen, fraseinspiradora,  Dicionario):
     Input : nchar, outgroup , ngen, fraseinpiradora, dicionario
     Ouput : print of the nexus file into the STDOUT
     """
-    print(f"""[{fraseinspiradora}]
-#NEXUS
+    print(f"""#NEXUS
+[{fraseinspiradora}]
 
 BEGIN DATA;
 DIMENSIONS NTAX={len(Dicionario)} NCHAR={nchar};
 FORMAT DATATYPE=DNA MISSING=N GAP=-;
 MATRIX""")
-    
+    maxlen = max([len(a) for a in Dicionario.keys()])
     for SpeciesName, sequence in Dicionario.items():
-        print('    '+ SpeciesName + '  ' + sequence)
-        #print("{: >99} ".format(SpeciesName) + '  ' + sequence)
-    print("  ;" + "\n" + "  end;")
+        print(f" {SpeciesName :>{maxlen}}  {sequence}")
+    print("  ;" + "\n" + "  END;")
     print(f'''
-begin mrbayes;
-set autoclose=yes;
-outgroup={outgroup};
-mcmcp ngen={ngen} printfreq=1000 samplefreq=100 diagnfreq=1000 nchains=4 savebrlens=yes filename=MyTree01;
-mcmc;
-sumt filename=MyTree01;
-end;''')
+  begin mrbayes;
+  set autoclose=yes;
+  outgroup {outgroup};
+  mcmcp ngen={ngen} printfreq=1000 samplefreq=100 diagnfreq=1000 nchains=4 savebrlens=yes filename=MyRun01;
+  mcmc;
+  sumt filename=MyRun01;
+  end;''')
     
 if __name__ == "__main__":
     Dicionario = ReadFile(sys.argv[1])
